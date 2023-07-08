@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace InsurancePoliciesSystem.Api.Users;
 
@@ -7,10 +11,12 @@ namespace InsurancePoliciesSystem.Api.Users;
 public class UsersController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
+    private readonly IConfiguration _configuration;
 
-    public UsersController(IUserRepository userRepository)
+    public UsersController(IUserRepository userRepository, IConfiguration configuration)
     {
         _userRepository = userRepository;
+        _configuration = configuration;
     }
 
     [HttpPost, Route("auth")]
@@ -27,8 +33,34 @@ public class UsersController : ControllerBase
             return BadRequest("Password is incorrect");
         }
 
-        return Ok("Login success");
+        var token = CreateJwt(user);
+        
+        return Ok(new {token});
     }
+    
+    private string CreateJwt(User user)
+    {
+        var jwtTokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:SecretKey"]!);
+        var identity = new ClaimsIdentity(new Claim[]
+        {
+            new(ClaimTypes.Role, $"{user.Role}"),
+            new(ClaimTypes.Name,$"{user.Login}")
+        });
+
+        var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = identity,
+            Expires = DateTime.Now.AddDays(1),
+            SigningCredentials = credentials
+        };
+        
+        var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+        return jwtTokenHandler.WriteToken(token);
+    }
+
 }
 
 public class UserToAuthenticateDto
