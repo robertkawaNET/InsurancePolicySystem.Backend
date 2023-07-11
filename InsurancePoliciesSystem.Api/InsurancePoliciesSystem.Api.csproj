@@ -7,9 +7,34 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DinkToPdf" Version="1.0.8" />
+      <PackageReference Include="Fluid.Core" Version="2.4.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="SellPolicies\WorkInsurance\WorkInsuranceResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>WorkInsuranceResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="SellPolicies\WorkInsurance\WorkInsuranceResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>WorkInsuranceResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="libwkhtmltox.dll" />
+      <Content Include="libwkhtmltox.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="PdfHtml" xml:space="preserve">
+        <value>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Policy&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #002366;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #004080;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #333;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .section-title {
+            background-color: #f2f2f2;
+            padding: 5px;
+        }
+
+        .section-title h2 {
+            color: #002366;
+            font-size: 24px;
+            margin: 0;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="section"&gt;
+        &lt;div class="section-title"&gt;
+            &lt;h2&gt;Policy Number: {{ PolicyNumber }}&lt;/h2&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="section"&gt;
+        &lt;div class="section-title"&gt;
+            &lt;h2&gt;Policyholder&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;p&gt;Company Name: {{ Policyholder.companyName }}&lt;/p&gt;
+        &lt;p&gt;NIP: {{ Policyholder.Nip }}&lt;/p&gt;
+        &lt;p&gt;Street: {{ Policyholder.Street }}&lt;/p&gt;
+        &lt;p&gt;House Number: {{ Policyholder.HouseNumber }}&lt;/p&gt;
+        &lt;p&gt;Flat Number: {{ Policyholder.FlatNumber }}&lt;/p&gt;
+        &lt;p&gt;Postal Code: {{ Policyholder.PostalCode }}&lt;/p&gt;
+        &lt;p&gt;City: {{ Policyholder.City }}&lt;/p&gt;
+        &lt;p&gt;Email: {{ Policyholder.Email }}&lt;/p&gt;
+        &lt;p&gt;Phone Number: {{ Policyholder.PhoneNumber }}&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;!-- Dodaj pozostałe sekcje polisy --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</value>
+    </data>
+</root>
