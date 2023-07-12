@@ -33,7 +33,8 @@ internal class InMemoryWorkInsuranceRepository : IWorkInsuranceRepository
             PolicyId = new PolicyId(policy.PolicyId.Value),
             PolicyNumber = policy.PolicyNumber,
             Price = policy.Variant.Price,
-            Package = Package.Work
+            Package = Package.Work,
+            CreateDate = policy.CreateDate
         });
     }
     
@@ -66,6 +67,7 @@ public class WorkInsurancePolicy
     public List<int> AgreementsIds { get; set; }
     public PolicyNumber PolicyNumber { get; set; }
     public List<Person> Persons { get; set; } = new();
+    public DateTime CreateDate { get; set; }
 
     public void AddPerson(Person person) => Persons.Add(person);
     
@@ -128,7 +130,8 @@ internal static class Mapper
             Policyholder = MapPolicyholderDtoToPolicyholder(createPolicyDto.Policyholder),
             Variant = MapVariantConfigurationDtoToVariant(createPolicyDto.Variant),
             AgreementsIds = createPolicyDto.AgreementsIds,
-            PolicyNumber = new PolicyNumber($"120-20-{_policyCount++}")
+            PolicyNumber = new PolicyNumber($"120-20-{_policyCount++}"),
+            CreateDate = DateTime.Now
         };
 
         return workInsurancePolicy;
@@ -159,7 +162,8 @@ internal static class Mapper
             SelectedPackage = variantConfigurationDto.SelectedPackage,
             PolicyType = variantConfigurationDto.PolicyType,
             DateFrom = variantConfigurationDto.DateFrom,
-            DateTo = variantConfigurationDto.DateTo
+            DateTo = variantConfigurationDto.DateTo,
+            Price = new Price(20) //todo value from calculator
         };
     }
 

@@ -1,6 +1,6 @@
 ﻿using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Services;
 using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
-using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance.Pdf;
 using InsurancePoliciesSystem.Api.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,13 +13,14 @@ namespace InsurancePoliciesSystem.Api.SellPolicies;
 [Route("api/sell-policies/work-insurance")]
 public class WorkInsuranceController : ControllerBase
 {
-    private readonly PdfCreator _pdfCreator;
+    private readonly WorkInsurancePdfGenerator _pdfGenerator;
     private readonly IWorkInsuranceRepository _repository;
     private readonly ISearchPolicyStorage _searchPolicyStorage;
 
-    public WorkInsuranceController(PdfCreator pdfCreator, IWorkInsuranceRepository repository, ISearchPolicyStorage searchPolicyStorage)
+
+    public WorkInsuranceController(WorkInsurancePdfGenerator pdfGenerator, IWorkInsuranceRepository repository, ISearchPolicyStorage searchPolicyStorage)
     {
-        _pdfCreator = pdfCreator;
+        _pdfGenerator = pdfGenerator;
         _repository = repository;
         _searchPolicyStorage = searchPolicyStorage;
     }
@@ -82,12 +83,11 @@ public class WorkInsuranceController : ControllerBase
         return Ok();
     }
     
-    
-    [HttpPost, Route("pdf/{policyId}")]
+    [HttpGet, Route("pdf/{policyId}")]
     public async Task<IActionResult> GetPdf(Guid policyId)
     {
-        var fileBytes = await _pdfCreator.GeneratePolicyPdf(new WorkInsurancePolicyId(policyId));
-        return File(fileBytes, "application/pdf", "polisa.pdf");
+        var policyPdf = await _pdfGenerator.GenerateAsync(new PolicyId(policyId));
+        return File(policyPdf.FileData, "application/pdf", policyPdf.FileName);
     }
 }
 

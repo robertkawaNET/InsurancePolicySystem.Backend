@@ -3,8 +3,8 @@ using System.Text.Json.Serialization;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Services;
 using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
-using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance.Pdf;
 using InsurancePoliciesSystem.Api.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -74,7 +74,10 @@ builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
 builder.Services.AddSingleton<IWorkInsuranceRepository, InMemoryWorkInsuranceRepository>();
 builder.Services.AddSingleton<ISearchPolicyStorage, InMemorySearchPolicyStorage>();
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-builder.Services.AddTransient<PdfCreator>();
+builder.Services.AddTransient<PolicyPdfGenerator, Test>();
+builder.Services.AddTransient<PolicyPdfGenerator, WorkInsurancePdfGenerator>();
+builder.Services.AddTransient<WorkInsurancePdfGenerator>();
+builder.Services.AddTransient<PdfProvider>();
 
 
 var app = builder.Build();
