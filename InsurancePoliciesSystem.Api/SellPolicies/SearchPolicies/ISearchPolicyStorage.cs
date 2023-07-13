@@ -68,15 +68,8 @@ public record PolicyId(Guid Value);
 
 public record Price(decimal Value);
 
-public readonly record struct Package
+public readonly record struct Package(string Value)
 {
-    public string Value { get; }
-
-    private Package(string value)
-    {
-        Value = value;
-    }
-
     public static readonly Package Work = new("Work");
     public static readonly Package Individual = new("Individual");
 }
