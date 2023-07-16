@@ -1,4 +1,5 @@
-﻿using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
+﻿using InsurancePoliciesSystem.Api.BackOffice.Agreements;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Services;
 using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
 using InsurancePoliciesSystem.Api.Users;
@@ -16,13 +17,15 @@ public class WorkInsuranceController : ControllerBase
     private readonly WorkInsurancePdfGenerator _pdfGenerator;
     private readonly IWorkInsuranceRepository _repository;
     private readonly ISearchPolicyStorage _searchPolicyStorage;
+    private readonly IAgreementsRepository _agreementsRepository;
 
 
-    public WorkInsuranceController(WorkInsurancePdfGenerator pdfGenerator, IWorkInsuranceRepository repository, ISearchPolicyStorage searchPolicyStorage)
+    public WorkInsuranceController(WorkInsurancePdfGenerator pdfGenerator, IWorkInsuranceRepository repository, ISearchPolicyStorage searchPolicyStorage, IAgreementsRepository agreementsRepository)
     {
         _pdfGenerator = pdfGenerator;
         _repository = repository;
         _searchPolicyStorage = searchPolicyStorage;
+        _agreementsRepository = agreementsRepository;
     }
 
     [HttpGet]
@@ -30,6 +33,17 @@ public class WorkInsuranceController : ControllerBase
     
     [HttpGet, Route("config")]
     public IActionResult GetPriceConfig() => Ok(new PriceConfigDto());
+
+    [HttpGet, Route("agreements")]
+    public async Task<IActionResult> GetAgreements()
+    {
+        var agreements = (await _agreementsRepository.GetAllForPackageAsync(Package.Work))
+            .Where(x => !x.IsDeleted)
+            .Select(x => x.MapToDto())
+            .ToList();
+
+        return Ok(agreements);
+    }
 
     [HttpPost, Route("create")]
     public async Task<IActionResult> Create([FromBody] CreatePolicyDto request)
@@ -118,7 +132,7 @@ public class CreatePolicyDto
 {
     public PolicyholderDto Policyholder { get; set; }
     public VariantConfigurationDto Variant { get; set; }
-    public List<int> AgreementsIds { get; set; }
+    public List<Guid> AgreementsIds { get; set; }
 }
 
 public class VariantConfigurationDto

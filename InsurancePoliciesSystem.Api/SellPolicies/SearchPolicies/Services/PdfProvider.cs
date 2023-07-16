@@ -1,6 +1,7 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using Fluid;
+using InsurancePoliciesSystem.Api.BackOffice.Agreements;
 using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -52,12 +53,12 @@ public class WorkInsurancePdfGenerator : PolicyPdfGenerator
     public override Package Package => Package.Work;
 
     private readonly IConverter _converter;
-    private readonly IWorkInsuranceRepository _repository;
+    private readonly WorkInsurancePolicyPdfModelProvider _modelProvider;
 
-    public WorkInsurancePdfGenerator(IConverter converter, IWorkInsuranceRepository repository)
+    public WorkInsurancePdfGenerator(IConverter converter, WorkInsurancePolicyPdfModelProvider modelProvider)
     {
         _converter = converter;
-        _repository = repository;
+        _modelProvider = modelProvider;
     }
 
     public override async Task<PolicyPdf> GenerateAsync(PolicyId policyId)
@@ -68,9 +69,9 @@ public class WorkInsurancePdfGenerator : PolicyPdfGenerator
         {
             throw new InvalidOperationException(error);
         }
-        
-        var policy = await _repository.GetByIdAsync(new WorkInsurancePolicyId(policyId.Value));
-        var model = JsonSerializer.Serialize(policy);
+
+        var policyModel = await _modelProvider.GetAsync(new WorkInsurancePolicyId(policyId.Value));
+        var model = JsonSerializer.Serialize(policyModel);
         var jsonString = JsonConvert.DeserializeObject<dynamic>(model);
         var context = new TemplateContext(jsonString);
         var html = await template.RenderAsync(context);
@@ -93,8 +94,42 @@ public class WorkInsurancePdfGenerator : PolicyPdfGenerator
         };
         
         var bytes = _converter.Convert(doc);
-        return new PolicyPdf($"{policy!.PolicyNumber}.pdf", bytes);
+        return new PolicyPdf($"{policyModel!.PolicyNumber}.pdf", bytes);
     }
 }
+
+public class WorkInsurancePolicyPdfModel
+{
+    public string PolicyNumber { get; set; }
+    public Policyholder Policyholder { get; set; }
+    public List<string> Agreements { get; set; }
+}
+
+public class WorkInsurancePolicyPdfModelProvider
+{
+    private readonly IWorkInsuranceRepository _workInsuranceRepository;
+    private readonly IAgreementsRepository _agreementsRepository;
+
+    public WorkInsurancePolicyPdfModelProvider(IWorkInsuranceRepository workInsuranceRepository, IAgreementsRepository agreementsRepository)
+    {
+        _workInsuranceRepository = workInsuranceRepository;
+        _agreementsRepository = agreementsRepository;
+    }
+
+    internal async Task<WorkInsurancePolicyPdfModel> GetAsync(WorkInsurancePolicyId policyId)
+    {
+        var policy = await _workInsuranceRepository.GetByIdAsync(policyId);
+        var agreements = await _agreementsRepository.GetByIdsAsync(policy.AgreementsIds);
+
+        return new WorkInsurancePolicyPdfModel
+        {
+            PolicyNumber = policy.PolicyNumber.Value,
+            Policyholder = policy.Policyholder,
+            Agreements = agreements.Select(x => x.AgreementText.Value).ToList()
+        };
+    }
+}
+
+
 
 public record PolicyPdf(string FileName, byte[] FileData);

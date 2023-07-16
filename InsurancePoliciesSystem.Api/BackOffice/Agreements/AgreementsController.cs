@@ -17,6 +17,7 @@ public class AgreementsController : ControllerBase
     public async Task<IActionResult> GetAgreements()
     {
         var agreements = (await _agreementsRepository.GetAllAsync())
+            .Where(x => !x.IsDeleted)
             .Select(x => x.MapToDto())
             .ToList();
 

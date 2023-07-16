@@ -79,6 +79,7 @@ builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new 
 builder.Services.AddTransient<PolicyPdfGenerator, Test>();
 builder.Services.AddTransient<PolicyPdfGenerator, WorkInsurancePdfGenerator>();
 builder.Services.AddTransient<WorkInsurancePdfGenerator>();
+builder.Services.AddTransient<WorkInsurancePolicyPdfModelProvider>();
 builder.Services.AddTransient<PdfProvider>();
 
 

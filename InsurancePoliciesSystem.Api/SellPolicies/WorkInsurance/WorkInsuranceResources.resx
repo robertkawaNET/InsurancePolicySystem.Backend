@@ -85,7 +85,17 @@
         &lt;p&gt;Email: {{ Policyholder.Email }}&lt;/p&gt;
         &lt;p&gt;Phone Number: {{ Policyholder.PhoneNumber }}&lt;/p&gt;
     &lt;/div&gt;
-    &lt;!-- Dodaj pozostałe sekcje polisy --&gt;
+      &lt;/div&gt;
+    &lt;div class="section"&gt;
+        &lt;div class="section-title"&gt;
+            &lt;h2&gt;Agreements&lt;/h2&gt;
+        &lt;/div&gt;
+	&lt;ol&gt;			
+        {% for Agreement in Agreements %}
+  		&lt;li&gt;{{ Agreement }}&lt;/li&gt;
+	{% endfor %}
+	&lt;/ol&gt;
+    &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </value>

@@ -1,4 +1,5 @@
-﻿using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
+﻿using InsurancePoliciesSystem.Api.BackOffice.Agreements;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
 using InsurancePoliciesSystem.Api.Users;
 
 namespace InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
@@ -64,7 +65,7 @@ public class WorkInsurancePolicy
     public WorkInsurancePolicyId PolicyId { get; set; }
     public Policyholder Policyholder { get; set; }
     public Variant Variant { get; set; }
-    public List<int> AgreementsIds { get; set; }
+    public List<AgreementId> AgreementsIds { get; set; }
     public PolicyNumber PolicyNumber { get; set; }
     public List<Person> Persons { get; set; } = new();
     public DateTime CreateDate { get; set; }
@@ -129,7 +130,7 @@ internal static class Mapper
             PolicyId = new WorkInsurancePolicyId(Guid.NewGuid()),
             Policyholder = MapPolicyholderDtoToPolicyholder(createPolicyDto.Policyholder),
             Variant = MapVariantConfigurationDtoToVariant(createPolicyDto.Variant),
-            AgreementsIds = createPolicyDto.AgreementsIds,
+            AgreementsIds = createPolicyDto.AgreementsIds.Select(x => new AgreementId(x)).ToList(),
             PolicyNumber = new PolicyNumber($"120-20-{_policyCount++}"),
             CreateDate = DateTime.Now
         };
