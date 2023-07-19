@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InsurancePoliciesSystem.Api.BackOffice.Agreements;
 
+[Authorize(Roles = "BackOffice")]
 [ApiController]
 [Route("api/back-office/agreements")]
 public class AgreementsController : ControllerBase

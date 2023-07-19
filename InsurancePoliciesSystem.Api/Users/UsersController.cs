@@ -44,8 +44,8 @@ public class UsersController : ControllerBase
         var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:SecretKey"]!);
         var identity = new ClaimsIdentity(new Claim[]
         {
-            new(ClaimTypes.Role, $"{user.Role}"),
-            new(ClaimTypes.Name,$"{user.Login}")
+            new(ClaimTypes.Role, $"{user.Role.ToString()}"),
+            new(ClaimTypes.Name,$"{user.Login.Value}")
         });
 
         var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);

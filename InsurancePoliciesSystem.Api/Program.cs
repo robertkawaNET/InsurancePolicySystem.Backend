@@ -3,9 +3,11 @@ using System.Text.Json.Serialization;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using InsurancePoliciesSystem.Api.BackOffice.Agreements;
+using InsurancePoliciesSystem.Api.SellPolicies;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Services;
 using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
+using InsurancePoliciesSystem.Api.Shared;
 using InsurancePoliciesSystem.Api.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -51,6 +53,7 @@ builder.Services.AddSwaggerGen(o =>
     o.AddSecurityRequirement(securityReq);
 });
 builder.Services.AddCors();
+builder.Services.AddAuthorization();
 
 builder.Services.AddAuthentication(x =>
 {
@@ -78,9 +81,14 @@ builder.Services.AddSingleton<ISearchPolicyStorage, InMemorySearchPolicyStorage>
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddTransient<PolicyPdfGenerator, Test>();
 builder.Services.AddTransient<PolicyPdfGenerator, WorkInsurancePdfGenerator>();
+builder.Services.AddTransient<CancelPolicyService>();
+builder.Services.AddTransient<PolicyCanceller, WorkInsurancePolicyCanceller>();
 builder.Services.AddTransient<WorkInsurancePdfGenerator>();
 builder.Services.AddTransient<WorkInsurancePolicyPdfModelProvider>();
 builder.Services.AddTransient<PdfProvider>();
+builder.Services.AddTransient<IClock, Clock>();
+builder.Services.AddTransient<IPriceConfigurationService, InMemoryPriceConfigurationService>();
+
 
 
 var app = builder.Build();

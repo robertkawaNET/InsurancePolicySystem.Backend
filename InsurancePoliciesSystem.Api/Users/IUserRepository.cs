@@ -15,7 +15,7 @@ internal class InMemoryUserRepository : IUserRepository
             new LastName("Kawa"),
             new Login("robertkawa1992"),
             new Password("testpass"),
-            Role.Admin
+            Role.BackOffice
         ),
         new User(
             new UserId(Guid.Parse("c0a05dab-bb68-4846-b507-e878b8f5d394")),

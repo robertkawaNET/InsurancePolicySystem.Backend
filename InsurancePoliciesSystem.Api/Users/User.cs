@@ -29,5 +29,5 @@ public readonly record struct Password(string Value);
 public enum Role
 {
     Agent,
-    Admin
+    BackOffice
 }
