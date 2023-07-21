@@ -62,7 +62,7 @@ public class WorkInsuranceController : ControllerBase
     [HttpPost, Route("create")]
     public async Task<IActionResult> Create([FromBody] CreatePolicyDto request)
     {
-        var policy = Mapper.Map(request);
+        var policy = Mapper.Map(request, _priceConfigurationService.Get());
         await _repository.AddAsync(policy);
         return Ok(await Task.FromResult(new
         {

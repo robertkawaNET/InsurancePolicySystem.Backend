@@ -33,7 +33,7 @@ internal class InMemoryWorkInsuranceRepository : IWorkInsuranceRepository
         {
             PolicyId = new PolicyId(policy.PolicyId.Value),
             PolicyNumber = policy.PolicyNumber,
-            Price = policy.Variant.Price,
+            Price = policy.Variant.TotalPrice,
             Package = Package.Work,
             CreateDate = policy.CreateDate,
             Status = policy.Status,
@@ -50,7 +50,7 @@ internal class InMemoryWorkInsuranceRepository : IWorkInsuranceRepository
         {
             PolicyId = new PolicyId(policy.PolicyId.Value),
             PolicyNumber = policy.PolicyNumber,
-            Price = policy.Variant.Price,
+            Price = policy.Variant.TotalPrice,
             Package = Package.Work,
             CreateDate = policy.CreateDate,
             Status = policy.Status
@@ -84,9 +84,23 @@ public class WorkInsurancePolicy
     public DateTime CreateDate { get; set; }
     public Status Status = Status.Active;
 
-    public void AddPerson(Person person) => Persons.Add(person);
+    public void AddPerson(Person person)
+    {
+        Persons.Add(person);
+        Recalculate();
+    }
     
-    public void DeletePerson(PersonId personId) => Persons.Single(x => x.PersonId == personId).MarkAsDeleted();
+    public void DeletePerson(PersonId personId)
+    {
+        Persons.Single(x => x.PersonId == personId).MarkAsDeleted();
+        Recalculate();
+    }
+
+    private void Recalculate()
+    {
+        Variant.NumberOfPeople = Persons.Count(x => !x.IsDeleted);
+        Variant.TotalPrice = new Price(Persons.Count * Variant.PricePerPerson.Value);
+    }
 
     public void Cancel(DateTime now)
     {
@@ -95,7 +109,7 @@ public class WorkInsurancePolicy
             throw new InvalidOperationException("The policy cannot be canceled after its start date");
         }
 
-        Status = Status.Active;
+        Status = Status.Cancelled;
     }
 }
 
@@ -146,20 +160,21 @@ public class Variant
     public PolicyType PolicyType { get; set; }
     public DateTime DateFrom { get; set; }
     public DateTime DateTo { get; set; }
-    public Price Price { get; set; }
+    public Price PricePerPerson { get; set; }
+    public Price TotalPrice { get; set; }
 }
 
 internal static class Mapper
 {
     private static int _policyCount;
     
-    public static WorkInsurancePolicy Map(CreatePolicyDto createPolicyDto)
+    public static WorkInsurancePolicy Map(CreatePolicyDto createPolicyDto, PriceConfigurationDto priceConfigurationDto)
     {
         WorkInsurancePolicy workInsurancePolicy = new WorkInsurancePolicy
         {
             PolicyId = new WorkInsurancePolicyId(Guid.NewGuid()),
             Policyholder = MapPolicyholderDtoToPolicyholder(createPolicyDto.Policyholder),
-            Variant = MapVariantConfigurationDtoToVariant(createPolicyDto.Variant),
+            Variant = MapVariantConfigurationDtoToVariant(createPolicyDto.Variant, priceConfigurationDto),
             AgreementsIds = createPolicyDto.AgreementsIds.Select(x => new AgreementId(x)).ToList(),
             PolicyNumber = new PolicyNumber($"120-20-{_policyCount++}"),
             CreateDate = DateTime.Now
@@ -184,8 +199,17 @@ internal static class Mapper
         };
     }
 
-    private static Variant MapVariantConfigurationDtoToVariant(VariantConfigurationDto variantConfigurationDto)
+    private static Variant MapVariantConfigurationDtoToVariant(VariantConfigurationDto variantConfigurationDto, PriceConfigurationDto priceConfiguration)
     {
+        var priceConfigurationForInsuranceSum = priceConfiguration.PriceConfigurationItems.Single(x => x.InsuranceSum == variantConfigurationDto.InsuranceSum);
+        var pricePerPerson = variantConfigurationDto.SelectedPackage switch
+        {
+            PackageType.Basic => priceConfigurationForInsuranceSum.Basic,
+            PackageType.Plus => priceConfigurationForInsuranceSum.Plus,
+            PackageType.Max => priceConfigurationForInsuranceSum.Max,
+            _ => throw new InvalidOperationException()
+        };
+
         return new Variant
         {
             NumberOfPeople = variantConfigurationDto.NumberOfPeople,
@@ -194,7 +218,8 @@ internal static class Mapper
             PolicyType = variantConfigurationDto.PolicyType,
             DateFrom = variantConfigurationDto.DateFrom,
             DateTo = variantConfigurationDto.DateTo,
-            Price = new Price(20) //todo value from calculator
+            PricePerPerson = new Price(pricePerPerson),
+            TotalPrice = new Price(pricePerPerson * variantConfigurationDto.NumberOfPeople)
         };
     }
 

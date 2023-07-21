@@ -20,6 +20,10 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>WorkInsuranceResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="SellPolicies\IndividualTravelInsurance\IndividualTravelInsuranceResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>IndividualTravelInsuranceResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -27,6 +31,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>WorkInsuranceResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="SellPolicies\IndividualTravelInsurance\IndividualTravelInsuranceResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>IndividualTravelInsuranceResources.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

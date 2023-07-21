@@ -87,5 +87,5 @@ public record Price(decimal Value);
 public readonly record struct Package(string Value)
 {
     public static readonly Package Work = new("Work");
-    public static readonly Package Individual = new("Individual");
+    public static readonly Package Travel = new("Travel");
 }

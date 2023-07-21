@@ -12,6 +12,7 @@ using InsurancePoliciesSystem.Api.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using IndividualTravelInsurance =InsurancePoliciesSystem.Api.SellPolicies.IndividualTravelInsurance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,15 +80,22 @@ builder.Services.AddSingleton<IWorkInsuranceRepository, InMemoryWorkInsuranceRep
 builder.Services.AddSingleton<IAgreementsRepository, InMemoryAgreementsRepository>();
 builder.Services.AddSingleton<ISearchPolicyStorage, InMemorySearchPolicyStorage>();
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-builder.Services.AddTransient<PolicyPdfGenerator, Test>();
-builder.Services.AddTransient<PolicyPdfGenerator, WorkInsurancePdfGenerator>();
 builder.Services.AddTransient<CancelPolicyService>();
 builder.Services.AddTransient<PolicyCanceller, WorkInsurancePolicyCanceller>();
+builder.Services.AddTransient<PolicyPdfGenerator, WorkInsurancePdfGenerator>();
 builder.Services.AddTransient<WorkInsurancePdfGenerator>();
 builder.Services.AddTransient<WorkInsurancePolicyPdfModelProvider>();
 builder.Services.AddTransient<PdfProvider>();
 builder.Services.AddTransient<IClock, Clock>();
-builder.Services.AddTransient<IPriceConfigurationService, InMemoryPriceConfigurationService>();
+builder.Services.AddSingleton<IPriceConfigurationService, InMemoryPriceConfigurationService>();
+
+builder.Services.AddSingleton<IndividualTravelInsurance.IPriceConfigurationService, IndividualTravelInsurance.InMemoryPriceConfigurationService>();
+builder.Services.AddTransient<IndividualTravelInsurance.ICountriesProvider, IndividualTravelInsurance.InMemoryCountriesDataProvider>();
+builder.Services.AddSingleton<IndividualTravelInsurance.IIndividualTravelInsuranceRepository, IndividualTravelInsurance.InMemoryIndividualTravelInsuranceRepository>();
+builder.Services.AddTransient<IndividualTravelInsurance.IndividualTravelInsurancePolicyPdfModelProvider>();
+builder.Services.AddTransient<PolicyPdfGenerator, IndividualTravelInsurance.IndividualTravelInsurancePdfGenerator>();
+builder.Services.AddTransient<IndividualTravelInsurance.IndividualTravelInsurancePdfGenerator>();
+builder.Services.AddTransient<PolicyCanceller, IndividualTravelInsurance.IndividualTravelInsuranceInsurancePolicyCanceller>();
 
 
 
