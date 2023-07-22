@@ -56,7 +56,6 @@ internal static class Mapper
             NumberOfPeople = variantConfigurationDto.NumberOfPeople,
             InsuranceSum = variantConfigurationDto.InsuranceSum,
             SelectedPackage = variantConfigurationDto.SelectedPackage,
-            PolicyType = variantConfigurationDto.PolicyType,
             DateFrom = variantConfigurationDto.DateFrom,
             DateTo = variantConfigurationDto.DateTo,
             PricePerPerson = new Price(pricePerPerson),

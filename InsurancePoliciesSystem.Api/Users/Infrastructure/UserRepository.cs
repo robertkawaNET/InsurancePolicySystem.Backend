@@ -2,7 +2,7 @@
 
 namespace InsurancePoliciesSystem.Api.Users.Infrastructure;
 
-internal class InMemoryUserRepository : IUserRepository
+internal class UserRepository : IUserRepository
 {
     private static readonly List<User> Users = new()
     {

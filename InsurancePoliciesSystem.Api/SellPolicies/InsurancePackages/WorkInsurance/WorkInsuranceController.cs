@@ -4,6 +4,7 @@ using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.A
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.App.Pdf;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.App.PriceConfiguration;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.Domain;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.Infrastructure;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Domain;
 using InsurancePoliciesSystem.Api.SellPolicies.Shared;
 using InsurancePoliciesSystem.Api.Users;
@@ -36,13 +37,13 @@ public class WorkInsuranceController : ControllerBase
     }
 
     [HttpGet, Route("config")]
-    public IActionResult GetPriceConfig() => Ok(_priceConfigurationService.Get());
+    public async Task<IActionResult> GetPriceConfig() => Ok(await _priceConfigurationService.GetAsync());
 
     [Authorize(Roles = "BackOffice")]
     [HttpPut, Route("config")]
-    public IActionResult UpdatePriceConfig([FromBody] PriceConfigurationDto priceConfigItem)
+    public async Task<IActionResult> UpdatePriceConfig([FromBody] PriceConfigurationDto priceConfigItem)
     {
-        _priceConfigurationService.Update(priceConfigItem);
+        await _priceConfigurationService.UpdateAsync(priceConfigItem);
         return Ok();
     }
 
@@ -61,7 +62,7 @@ public class WorkInsuranceController : ControllerBase
     [HttpPost, Route("create")]
     public async Task<IActionResult> Create([FromBody] CreatePolicyDto request)
     {
-        var policy = Mapper.Map(request, _priceConfigurationService.Get());
+        var policy = Mapper.Map(request, await _priceConfigurationService.GetAsync());
         await _repository.AddAsync(policy);
         return Ok(await Task.FromResult(new
         {

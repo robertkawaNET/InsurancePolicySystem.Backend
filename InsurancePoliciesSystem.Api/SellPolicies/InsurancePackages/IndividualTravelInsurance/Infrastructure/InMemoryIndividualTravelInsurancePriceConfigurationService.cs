@@ -2,7 +2,7 @@
 
 namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Infrastructure;
 
-public class InMemoryPriceConfigurationService : IPriceConfigurationService
+public class InMemoryIndividualTravelInsurancePriceConfigurationService : IIndividualTravelInsurancePriceConfigurationService
 {
     private PriceConfigurationDto _priceConfiguration = new PriceConfigurationDto
     {
@@ -14,10 +14,11 @@ public class InMemoryPriceConfigurationService : IPriceConfigurationService
         }
     };
 
-    public PriceConfigurationDto Get() => _priceConfiguration;
+    public Task<PriceConfigurationDto> GetAsync() => Task.FromResult(_priceConfiguration);
 
-    public void Update(PriceConfigurationDto priceConfiguration)
+    public Task UpdateAsync(PriceConfigurationDto priceConfiguration)
     {
         _priceConfiguration = priceConfiguration;
+        return Task.CompletedTask;
     }
 }

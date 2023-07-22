@@ -14,7 +14,7 @@ internal static class Mapper
     {
         IndividualTravelInsurancePolicy workInsurancePolicy = new IndividualTravelInsurancePolicy
         {
-            PolicyPolicyId = new IndividualTravelInsurancePolicyId(Guid.NewGuid()),
+            PolicyId = new IndividualTravelInsurancePolicyId(Guid.NewGuid()),
             Policyholder = MapPolicyholderDtoToPolicyholder(createPolicyDto.Policyholder),
             Variant = MapVariantConfigurationDtoToVariant(createPolicyDto.Variant, priceConfigurationDto),
             AgreementsIds = createPolicyDto.AgreementsIds.Select(x => new AgreementId(x)).ToList(),
@@ -60,7 +60,7 @@ internal static class Mapper
             SelectedPackage = variantConfigurationDto.SelectedPackage,
             DateFrom = variantConfigurationDto.DateFrom,
             DateTo = variantConfigurationDto.DateTo,
-            Country = new Country(variantConfigurationDto.Country,
+            Country = Country.From(variantConfigurationDto.Country),
                 PricePerDay = new Price(pricePerDay),
                 TotalPrice = new Price(pricePerDay * numberOfDays)
         };

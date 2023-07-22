@@ -5,7 +5,7 @@ namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualT
 
 public class IndividualTravelInsurancePolicy
 {
-    public IndividualTravelInsurancePolicyId PolicyPolicyId { get; set; }
+    public IndividualTravelInsurancePolicyId PolicyId { get; set; }
     public Policyholder Policyholder { get; set; }
     public Variant Variant { get; set; }
     public List<AgreementId> AgreementsIds { get; set; }

@@ -15,31 +15,31 @@ namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualT
 [Authorize(Roles = "Agent,BackOffice")]
 public class IndividualTravelInsuranceController : ControllerBase
 {
-    private readonly IPriceConfigurationService _priceConfigurationService;
+    private readonly IIndividualTravelInsurancePriceConfigurationService _individualTravelInsurancePriceConfigurationService;
     private readonly IAgreementsRepository _agreementsRepository;
     private readonly IIndividualTravelInsuranceRepository _repository;
     private readonly IndividualTravelInsurancePdfGenerator _pdfGenerator;
 
     public IndividualTravelInsuranceController(
-        IPriceConfigurationService priceConfigurationService,
+        IIndividualTravelInsurancePriceConfigurationService individualTravelInsurancePriceConfigurationService,
         IAgreementsRepository agreementsRepository,
         IIndividualTravelInsuranceRepository repository,
         IndividualTravelInsurancePdfGenerator pdfGenerator)
     {
-        _priceConfigurationService = priceConfigurationService;
+        _individualTravelInsurancePriceConfigurationService = individualTravelInsurancePriceConfigurationService;
         _agreementsRepository = agreementsRepository;
         _repository = repository;
         _pdfGenerator = pdfGenerator;
     }
 
     [HttpGet, Route("config")]
-    public IActionResult GetPriceConfig() => Ok(_priceConfigurationService.Get());
+    public async Task<IActionResult> GetPriceConfig() => Ok(await _individualTravelInsurancePriceConfigurationService.GetAsync());
     
     [Authorize(Roles = "BackOffice")]
     [HttpPut, Route("config")]
-    public IActionResult UpdatePriceConfig([FromBody] PriceConfigurationDto priceConfigItem)
+    public async Task<IActionResult> UpdatePriceConfig([FromBody] PriceConfigurationDto priceConfigItem)
     {
-        _priceConfigurationService.Update(priceConfigItem);
+        await _individualTravelInsurancePriceConfigurationService.UpdateAsync(priceConfigItem);
         return Ok();
     }
 
@@ -64,12 +64,12 @@ public class IndividualTravelInsuranceController : ControllerBase
     [HttpPost, Route("create")]
     public async Task<IActionResult> Create([FromBody] CreatePolicyDto request)
     {
-        var policy = Mapper.Map(request, _priceConfigurationService.Get());
+        var policy = Mapper.Map(request, await _individualTravelInsurancePriceConfigurationService.GetAsync());
         await _repository.AddAsync(policy);
         return Ok(await Task.FromResult(new
         {
             policyNumber = policy.PolicyNumber.Value,
-            policyId = policy.PolicyPolicyId.Value
+            policyId = policy.PolicyId.Value
         }));
     }
     

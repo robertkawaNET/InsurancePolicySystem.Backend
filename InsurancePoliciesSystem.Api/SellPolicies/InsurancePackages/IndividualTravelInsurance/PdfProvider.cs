@@ -2,6 +2,7 @@
 using DinkToPdf.Contracts;
 using Fluid;
 using InsurancePoliciesSystem.Api.BackOffice.Agreements.Domain;
+using InsurancePoliciesSystem.Api.SellPolicies.IndividualTravelInsurance;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Domain;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App.Pdf;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Domain;

@@ -14,10 +14,11 @@ public class InMemoryPriceConfigurationService : IPriceConfigurationService
         }
     };
 
-    public PriceConfigurationDto Get() => _priceConfiguration;
+    public Task<PriceConfigurationDto> GetAsync() => Task.FromResult(_priceConfiguration);
 
-    public void Update(PriceConfigurationDto priceConfiguration)
+    public Task UpdateAsync(PriceConfigurationDto priceConfiguration)
     {
         _priceConfiguration = priceConfiguration;
+        return Task.CompletedTask;
     }
 }

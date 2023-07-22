@@ -2,6 +2,6 @@
 
 public interface IPriceConfigurationService
 {
-    PriceConfigurationDto Get();
-    void Update(PriceConfigurationDto priceConfiguration);
+    Task<PriceConfigurationDto> GetAsync();
+    Task UpdateAsync(PriceConfigurationDto priceConfiguration);
 }
