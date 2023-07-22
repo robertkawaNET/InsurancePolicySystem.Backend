@@ -15,6 +15,7 @@ internal static class SearchPolicyDtoMapper
             CreateDate = searchPolicy.CreateDate,
             DateFrom = searchPolicy.DateFrom,
             DateTo = searchPolicy.DateTo,
+            Status = searchPolicy.Status,
             CanCancel = now < searchPolicy.DateFrom && searchPolicy.Status == Status.Active
         };
 }

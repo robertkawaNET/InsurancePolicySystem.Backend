@@ -1,4 +1,6 @@
-﻿namespace InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App;
+﻿using InsurancePoliciesSystem.Api.SellPolicies.Shared;
+
+namespace InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App;
 
 public class SearchPolicyDto
 {
@@ -10,4 +12,5 @@ public class SearchPolicyDto
     public DateTime DateFrom { get; set; }
     public DateTime DateTo { get; set; }
     public bool CanCancel { get; set; }
+    public Status Status { get; set; }
 }

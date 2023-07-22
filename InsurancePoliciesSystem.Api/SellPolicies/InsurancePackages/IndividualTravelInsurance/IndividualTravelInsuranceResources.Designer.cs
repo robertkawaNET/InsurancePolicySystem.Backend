@@ -38,8 +38,8 @@ namespace InsurancePoliciesSystem.Api.SellPolicies.IndividualTravelInsurance {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InsurancePoliciesSystem.Api.SellPolicies.IndividualTravelInsurance.IndividualTrav" +
-                            "elInsuranceResources", typeof(IndividualTravelInsuranceResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsura" +
+                            "nce.IndividualTravelInsuranceResources", typeof(IndividualTravelInsuranceResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -6,6 +6,8 @@ using InsurancePoliciesSystem.Api.BackOffice.Agreements.Domain;
 using InsurancePoliciesSystem.Api.BackOffice.Agreements.Infrastructure;
 using InsurancePoliciesSystem.Api.Database;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.CancelPolicy;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.Pdf;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.PriceCOnfiguration;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Domain;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Infrastructure;
@@ -94,7 +96,7 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development
     builder.Services.AddSingleton<IAgreementsRepository, InMemoryAgreementsRepository>();
     builder.Services.AddSingleton<ISearchPolicyStorage, InMemorySearchPolicyStorage>();
     builder.Services.AddSingleton<IPriceConfigurationService, InMemoryPriceConfigurationService>();
-    builder.Services.AddTransient<IWorkInsuranceRepository, InMemoryWorkInsuranceRepository>();
+    builder.Services.AddSingleton<IWorkInsuranceRepository, InMemoryWorkInsuranceRepository>();
     builder.Services.AddSingleton<IIndividualTravelInsurancePriceConfigurationService, InMemoryIndividualTravelInsurancePriceConfigurationService>();
     builder.Services.AddSingleton<IIndividualTravelInsuranceRepository, InMemoryIndividualTravelInsuranceRepository>();
 }

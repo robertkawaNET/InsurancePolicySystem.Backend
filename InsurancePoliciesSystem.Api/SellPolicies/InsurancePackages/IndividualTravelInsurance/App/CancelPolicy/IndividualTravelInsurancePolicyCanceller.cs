@@ -4,7 +4,7 @@ using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Domain;
 using InsurancePoliciesSystem.Api.SellPolicies.Shared;
 using InsurancePoliciesSystem.Api.Shared;
 
-namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance;
+namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.CancelPolicy;
 
 public class IndividualTravelInsuranceInsurancePolicyCanceller : PolicyCanceller
 {

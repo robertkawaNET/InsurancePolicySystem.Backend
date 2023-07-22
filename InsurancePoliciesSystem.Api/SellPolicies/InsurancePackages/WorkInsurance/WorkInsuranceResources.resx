@@ -75,7 +75,7 @@
         &lt;div class="section-title"&gt;
             &lt;h2&gt;Policyholder&lt;/h2&gt;
         &lt;/div&gt;
-        &lt;p&gt;Company Name: {{ Policyholder.companyName }}&lt;/p&gt;
+        &lt;p&gt;Company Name: {{ Policyholder.CompanyName }}&lt;/p&gt;
         &lt;p&gt;NIP: {{ Policyholder.Nip }}&lt;/p&gt;
         &lt;p&gt;Street: {{ Policyholder.Street }}&lt;/p&gt;
         &lt;p&gt;House Number: {{ Policyholder.HouseNumber }}&lt;/p&gt;
@@ -86,6 +86,15 @@
         &lt;p&gt;Phone Number: {{ Policyholder.PhoneNumber }}&lt;/p&gt;
     &lt;/div&gt;
       &lt;/div&gt;
+&lt;div class="section"&gt;
+        &lt;div class="section-title"&gt;
+        	&lt;h2&gt;Variant {{ Variant.SelectedPackage }}&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;p&gt;Insurance Sum: {{ Variant.InsuranceSum }}&lt;/p&gt;
+        &lt;p&gt;Date From: {{ Variant.DateFrom }}&lt;/p&gt;
+        &lt;p&gt;Date To: {{ Variant.DateTo }}&lt;/p&gt;
+        &lt;p&gt;Price per person: {{ Variant.PricePerPerson }}&lt;/p&gt;
+    &lt;/div&gt;
     &lt;div class="section"&gt;
         &lt;div class="section-title"&gt;
             &lt;h2&gt;Agreements&lt;/h2&gt;
@@ -96,6 +105,8 @@
 	{% endfor %}
 	&lt;/ol&gt;
     &lt;/div&gt;
+
+&lt;h2&gt;Total price: {{ Variant.TotalPrice }}&lt;/h2&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </value>

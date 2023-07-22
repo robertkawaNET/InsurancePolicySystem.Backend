@@ -1,6 +1,7 @@
 ﻿using InsurancePoliciesSystem.Api.BackOffice.Agreements.App;
 using InsurancePoliciesSystem.Api.BackOffice.Agreements.Domain;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.Pdf;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.PriceCOnfiguration;
 using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Domain;
 using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Domain;

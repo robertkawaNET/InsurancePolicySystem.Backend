@@ -76,7 +76,7 @@
         &lt;div class="section-title"&gt;
             &lt;h2&gt;Policyholder&lt;/h2&gt;
         &lt;/div&gt;
-        &lt;p&gt;First Name: {{ Policyholder.firstName}}&lt;/p&gt;
+        &lt;p&gt;First Name: {{ Policyholder.FirstName}}&lt;/p&gt;
         &lt;p&gt;Last name: {{ Policyholder.LastName }}&lt;/p&gt;
         &lt;p&gt;Street: {{ Policyholder.Street }}&lt;/p&gt;
         &lt;p&gt;House Number: {{ Policyholder.HouseNumber }}&lt;/p&gt;
@@ -94,7 +94,7 @@
         &lt;p&gt;Insurance Sum: {{ Variant.InsuranceSum }}&lt;/p&gt;
         &lt;p&gt;Date From: {{ Variant.DateFrom }}&lt;/p&gt;
         &lt;p&gt;Date To: {{ Variant.DateTo }}&lt;/p&gt;
-        &lt;p&gt;Price: {{ Variant.Price }}&lt;/p&gt;
+        &lt;p&gt;Price per day: {{ Variant.PricePerDay }}&lt;/p&gt;
     &lt;/div&gt;
   
     &lt;div class="section"&gt;
@@ -107,6 +107,8 @@
 	{% endfor %}
 	&lt;/ol&gt;
     &lt;/div&gt;
+
+	&lt;h2&gt;Total Price: {{ Variant.TotalPrice }}&lt;/h2&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 
