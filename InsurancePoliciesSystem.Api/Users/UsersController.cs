@@ -1,8 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿using InsurancePoliciesSystem.Api.Users.App;
+using InsurancePoliciesSystem.Api.Users.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace InsurancePoliciesSystem.Api.Users;
 
@@ -11,12 +9,12 @@ namespace InsurancePoliciesSystem.Api.Users;
 public class UsersController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
-    private readonly IConfiguration _configuration;
+    private readonly JwtTokenProvider _jwtTokenProvider;
 
-    public UsersController(IUserRepository userRepository, IConfiguration configuration)
+    public UsersController(IUserRepository userRepository, JwtTokenProvider jwtTokenProvider)
     {
         _userRepository = userRepository;
-        _configuration = configuration;
+        _jwtTokenProvider = jwtTokenProvider;
     }
 
     [HttpPost, Route("auth")]
@@ -33,38 +31,8 @@ public class UsersController : ControllerBase
             return BadRequest("Password is incorrect");
         }
 
-        var token = CreateJwt(user);
+        var token = _jwtTokenProvider.CreateJwt(user);
         
         return Ok(new {token});
     }
-    
-    private string CreateJwt(User user)
-    {
-        var jwtTokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:SecretKey"]!);
-        var identity = new ClaimsIdentity(new Claim[]
-        {
-            new(ClaimTypes.Role, $"{user.Role.ToString()}"),
-            new(ClaimTypes.Name,$"{user.Login.Value}")
-        });
-
-        var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = identity,
-            Expires = DateTime.Now.AddDays(1),
-            SigningCredentials = credentials
-        };
-        
-        var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-        return jwtTokenHandler.WriteToken(token);
-    }
-
-}
-
-public class UserToAuthenticateDto
-{
-    public string Login { get; set; }
-    public string Password { get; set; }
 }

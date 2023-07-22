@@ -1,5 +1,8 @@
-﻿using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Services;
-using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
+﻿using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App.CancelPolicy;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App.Pdf;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Domain;
+using InsurancePoliciesSystem.Api.SellPolicies.Shared;
 using InsurancePoliciesSystem.Api.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

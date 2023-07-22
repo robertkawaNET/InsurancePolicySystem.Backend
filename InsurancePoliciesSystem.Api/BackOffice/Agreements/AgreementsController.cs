@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using InsurancePoliciesSystem.Api.BackOffice.Agreements.App;
+using InsurancePoliciesSystem.Api.BackOffice.Agreements.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InsurancePoliciesSystem.Api.BackOffice.Agreements;

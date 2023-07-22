@@ -3,16 +3,34 @@ using System.Text.Json.Serialization;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using InsurancePoliciesSystem.Api.BackOffice.Agreements;
+using InsurancePoliciesSystem.Api.BackOffice.Agreements.Domain;
+using InsurancePoliciesSystem.Api.BackOffice.Agreements.Infrastructure;
 using InsurancePoliciesSystem.Api.SellPolicies;
-using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies;
-using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Services;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Domain;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Infrastructure;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.App;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.App.CancelPolicy;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.App.Pdf;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.Domain;
+using InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.Infrastructure;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App.CancelPolicy;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.App.Pdf;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Domain;
+using InsurancePoliciesSystem.Api.SellPolicies.SearchPolicies.Infrastructure;
 using InsurancePoliciesSystem.Api.SellPolicies.WorkInsurance;
 using InsurancePoliciesSystem.Api.Shared;
 using InsurancePoliciesSystem.Api.Users;
+using InsurancePoliciesSystem.Api.Users.App;
+using InsurancePoliciesSystem.Api.Users.Domain;
+using InsurancePoliciesSystem.Api.Users.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using IndividualTravelInsurance =InsurancePoliciesSystem.Api.SellPolicies.IndividualTravelInsurance;
+using InMemoryPriceConfigurationService = InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.Infrastructure.InMemoryPriceConfigurationService;
+using IPriceConfigurationService = InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsurance.App.PriceConfiguration.IPriceConfigurationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,13 +107,13 @@ builder.Services.AddTransient<PdfProvider>();
 builder.Services.AddTransient<IClock, Clock>();
 builder.Services.AddSingleton<IPriceConfigurationService, InMemoryPriceConfigurationService>();
 
-builder.Services.AddSingleton<IndividualTravelInsurance.IPriceConfigurationService, IndividualTravelInsurance.InMemoryPriceConfigurationService>();
-builder.Services.AddTransient<IndividualTravelInsurance.ICountriesProvider, IndividualTravelInsurance.InMemoryCountriesDataProvider>();
-builder.Services.AddSingleton<IndividualTravelInsurance.IIndividualTravelInsuranceRepository, IndividualTravelInsurance.InMemoryIndividualTravelInsuranceRepository>();
-builder.Services.AddTransient<IndividualTravelInsurance.IndividualTravelInsurancePolicyPdfModelProvider>();
-builder.Services.AddTransient<PolicyPdfGenerator, IndividualTravelInsurance.IndividualTravelInsurancePdfGenerator>();
-builder.Services.AddTransient<IndividualTravelInsurance.IndividualTravelInsurancePdfGenerator>();
-builder.Services.AddTransient<PolicyCanceller, IndividualTravelInsurance.IndividualTravelInsuranceInsurancePolicyCanceller>();
+builder.Services.AddSingleton<InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.App.PriceCOnfiguration.IPriceConfigurationService, InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.IndividualTravelInsurance.Infrastructure.InMemoryPriceConfigurationService>();
+builder.Services.AddSingleton<IIndividualTravelInsuranceRepository, InMemoryIndividualTravelInsuranceRepository>();
+builder.Services.AddTransient<IndividualTravelInsurancePolicyPdfModelProvider>();
+builder.Services.AddTransient<PolicyPdfGenerator, IndividualTravelInsurancePdfGenerator>();
+builder.Services.AddTransient<IndividualTravelInsurancePdfGenerator>();
+builder.Services.AddTransient<PolicyCanceller, IndividualTravelInsuranceInsurancePolicyCanceller>();
+builder.Services.AddTransient<JwtTokenProvider>();
 
 
 

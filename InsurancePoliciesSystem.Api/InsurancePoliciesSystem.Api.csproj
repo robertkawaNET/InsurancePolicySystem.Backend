@@ -16,23 +16,23 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="SellPolicies\WorkInsurance\WorkInsuranceResources.resx">
+      <EmbeddedResource Update="SellPolicies\InsurancePackages\WorkInsurance\WorkInsuranceResources.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>WorkInsuranceResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Update="SellPolicies\IndividualTravelInsurance\IndividualTravelInsuranceResources.resx">
+      <EmbeddedResource Update="SellPolicies\InsurancePackages\IndividualTravelInsurance\IndividualTravelInsuranceResources.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>IndividualTravelInsuranceResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="SellPolicies\WorkInsurance\WorkInsuranceResources.Designer.cs">
+      <Compile Update="SellPolicies\InsurancePackages\WorkInsurance\WorkInsuranceResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>WorkInsuranceResources.resx</DependentUpon>
       </Compile>
-      <Compile Update="SellPolicies\IndividualTravelInsurance\IndividualTravelInsuranceResources.Designer.cs">
+      <Compile Update="SellPolicies\InsurancePackages\IndividualTravelInsurance\IndividualTravelInsuranceResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>IndividualTravelInsuranceResources.resx</DependentUpon>
