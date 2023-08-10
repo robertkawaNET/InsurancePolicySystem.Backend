@@ -3,7 +3,7 @@ using InsurancePoliciesSystem.Api.SellPolicies.Shared;
 
 namespace InsurancePoliciesSystem.Api.BackOffice.Agreements.App;
 
-internal static class AgreementDtoMapper
+internal static class AgreementsMapper
 {
     internal static AgreementDto MapToDto(this Agreement agreement)
         => new()

@@ -5,14 +5,14 @@ namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsuran
 
 public class WorkInsurancePolicy
 {
-    public WorkInsurancePolicyId PolicyId { get; set; }
-    public Policyholder Policyholder { get; set; }
-    public Variant Variant { get; set; }
-    public List<AgreementId> AgreementsIds { get; set; }
-    public PolicyNumber PolicyNumber { get; set; }
-    public List<Person> Persons { get; set; } = new();
-    public DateTime CreateDate { get; set; }
-    public Status Status = Status.Active;
+    public WorkInsurancePolicyId PolicyId { get; private set; }
+    public Policyholder Policyholder { get; private set; }
+    public Variant Variant { get; }
+    public List<AgreementId> AgreementsIds { get; private set; }
+    public PolicyNumber PolicyNumber { get; private set; }
+    public List<Person> Persons { get; } = new();
+    public DateTime CreateDate { get; private set; }
+    public Status Status { get; private set; } = Status.Active;
 
     public void AddPerson(Person person)
     {
@@ -40,5 +40,25 @@ public class WorkInsurancePolicy
         }
 
         Status = Status.Cancelled;
+    }
+
+    protected WorkInsurancePolicy()
+    {
+    }
+    
+    public WorkInsurancePolicy(
+        WorkInsurancePolicyId policyId,
+        Policyholder policyholder,
+        Variant variant,
+        List<AgreementId> agreementsIds,
+        PolicyNumber policyNumber,
+        DateTime createDate)
+    {
+        PolicyId = policyId;
+        Policyholder = policyholder;
+        Variant = variant;
+        AgreementsIds = agreementsIds;
+        PolicyNumber = policyNumber;
+        CreateDate = createDate;
     }
 }

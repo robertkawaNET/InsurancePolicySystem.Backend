@@ -5,10 +5,10 @@ namespace InsurancePoliciesSystem.Api.SellPolicies.InsurancePackages.WorkInsuran
 
 public class Person
 {
-    public PersonId PersonId { get; set; }
-    public FirstName FirstName { get; set; }
-    public LastName LastName { get; set; }
-    public bool IsDeleted { get; set; }
+    public PersonId PersonId { get; private set; }
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
+    public bool IsDeleted { get; private set; }
 
     public static Person Create(PersonId personId, FirstName firstName, LastName lastName)
     {

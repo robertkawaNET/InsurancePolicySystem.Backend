@@ -2,7 +2,7 @@
 
 public class Policyholder
 {
-    public string CompanyName { get; set; }
+    public string? CompanyName { get; set; }
     public string Nip { get; set; }
     public string Street { get; set; }
     public string HouseNumber { get; set; }

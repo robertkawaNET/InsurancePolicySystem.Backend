@@ -11,15 +11,15 @@ internal static class Mapper
     
     public static WorkInsurancePolicy Map(CreatePolicyDto createPolicyDto, PriceConfigurationDto priceConfigurationDto)
     {
-        WorkInsurancePolicy workInsurancePolicy = new WorkInsurancePolicy
-        {
-            PolicyId = new WorkInsurancePolicyId(Guid.NewGuid()),
-            Policyholder = MapPolicyholderDtoToPolicyholder(createPolicyDto.Policyholder),
-            Variant = MapVariantConfigurationDtoToVariant(createPolicyDto.Variant, priceConfigurationDto),
-            AgreementsIds = createPolicyDto.AgreementsIds.Select(x => new AgreementId(x)).ToList(),
-            PolicyNumber = new PolicyNumber($"120-20-{_policyCount++}"),
-            CreateDate = DateTime.Now
-        };
+        var workInsurancePolicy = new WorkInsurancePolicy
+        (
+            new WorkInsurancePolicyId(Guid.NewGuid()),
+            MapPolicyholderDtoToPolicyholder(createPolicyDto.Policyholder),
+            MapVariantConfigurationDtoToVariant(createPolicyDto.Variant, priceConfigurationDto),
+            createPolicyDto.AgreementsIds.Select(x => new AgreementId(x)).ToList(),
+            new PolicyNumber($"120-20-{_policyCount++}"),
+            DateTime.Now
+        );
 
         return workInsurancePolicy;
     }
