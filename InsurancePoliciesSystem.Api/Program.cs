@@ -65,6 +65,7 @@ var securityReq = new OpenApiSecurityRequirement()
 };
 builder.Services.AddSwaggerGen(o =>
 {
+    o.CustomSchemaIds(type => type.FullName);
     o.AddSecurityDefinition("Bearer", securityScheme);
     o.AddSecurityRequirement(securityReq);
 });
