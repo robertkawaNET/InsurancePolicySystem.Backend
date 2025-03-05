@@ -21,6 +21,9 @@ jobs:
         with: 
             dotnet-version: '7.0.x'
 
+      - name: Restore
+        run: dotnet restore ./InsurancePoliciesSystem.Backend.sln
+
       - name: Build
         run: dotnet build ./InsurancePoliciesSystem.Backend.sln --configuration Release
 
