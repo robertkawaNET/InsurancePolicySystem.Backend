@@ -10,6 +10,7 @@ env:
   AZURE_WEBAPP_NAME: IpsApi
   AZURE_WEBAPP_PACKAGE_PATH: "./publish" 
   AZURE_CONTAINER_REGISTRY: AzRegistry
+  AZURE_CONTAINER_NAME: azregistry
 
 
 jobs:
@@ -44,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v6
         with: 
           push: true
-          tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.AZURE_WEBAPP_NAME }}:${{ github.sha }}
+          tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.AZURE_CONTAINER_NAME }}:${{ github.sha }}
           file: InsurancePoliciesSystem.Backend/DockerFile
 
     
