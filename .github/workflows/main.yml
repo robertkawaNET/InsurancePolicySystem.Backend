@@ -46,7 +46,7 @@ jobs:
         with: 
           push: true
           tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.AZURE_CONTAINER_NAME }}:${{ github.sha }}
-          file: InsurancePoliciesSystem.Backend/DockerFile
+          file: InsurancePoliciesSystem.Api/DockerFile
 
     
         
