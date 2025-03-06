@@ -44,10 +44,9 @@ jobs:
       - name: Build and push container image to ACR
         uses: docker/build-push-action@v6
         with:
-          context: .
           push: true
           tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.AZURE_CONTAINER_NAME }}:${{ github.sha }}
-          file: ./InsurancePoliciesSystem.Api/DockerFile
+          file: InsurancePoliciesSystem.Api/Dockerfile
 
     
         
